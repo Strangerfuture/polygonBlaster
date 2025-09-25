@@ -1,3 +1,54 @@
+# 🕹️ polygonBlaster
+
+A **retro-inspired twin-stick shooter** inspired by *Geometry Wars*.  
+Built in **C++** with **SFML**, **ImGui**, and an **ECS design pattern** for clean, modular game architecture.  
+
+---
+
+## ✨ Features
+- Fast-paced arcade action with a neon grid aesthetic  
+- Smooth 2D rendering powered by **SFML**  
+- **ImGui debug tools** for real-time tweaks  
+- Modular **ECS design** for scalable gameplay systems  
+- Particle effects & retro visuals  
+
+---
+
+## 🎮 Controls
+- `WASD` – Move  
+- `Mouse left` – Shoot in direction  
+- `Mouse right` - Special Attack , yet to implement
+- `P` – Pause
+- `Esc` - Exit 
+
+*(Controls may change as development continues.)*  
+
+---
+
+## 🔧 Tech Stack
+- **C++20**  
+- [SFML](https://www.sfml-dev.org/) – rendering, input, audio  
+- [ImGui](https://github.com/ocornut/imgui) – debugging UI  
+- **ECS architecture** – entity & system management  
+
+---
+
+## 🚀 Building From Source
+### Prerequisites
+- C++20 compatible compiler (GCC, Clang, or MSVC)  
+- CMake (>=3.16)  
+- SFML (>=2.6)  
+- ImGui  
+
+### Build Instructions
+```bash
+git clone https://github.com/Strangerfuture/polygonBlaster
+cd polygonBlaster
+mkdir build && cd build
+cmake ..
+make
+./polygonBlaster
+```
 # Config Specification:
 
 ### Window W H FL FS
