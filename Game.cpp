@@ -80,8 +80,8 @@ void Game::run()
 
         sEnemySpawner();
         sCollision();
-        sMovement();
         sUserInput();
+        sMovement();
         // sGUI();
         sRender();
 
@@ -101,7 +101,7 @@ void Game::spawnPlayer()
 
     // give the enity a transform so it spwns at (200,200) with velcity(1,1) and angle
     Vec2f wMiddle = {m_windowConfig.wWidth / 2, m_windowConfig.wHeight / 2};
-    entity->add<CTransform>(wMiddle, Vec2f(1.0f, 1.0f), 1.0f);
+    entity->add<CTransform>(wMiddle, Vec2f(2.0f, 2.0f), 1.0f);
     // the entity shape will have radius 32, 8 sides , drak gray dill and red outline
     entity->add<CShape>((float)m_playerConfig.SR, m_playerConfig.V, sf::Color(m_playerConfig.FR, m_playerConfig.FG, m_playerConfig.FB), sf::Color(m_playerConfig.OR, m_playerConfig.OG, m_playerConfig.OB), m_playerConfig.OT);
     // add a input component to the player do that we can use inputs
@@ -150,7 +150,23 @@ void Game::sMovement()
     // sampel movement speed update
 
     auto &transform = player()->get<CTransform>();
-    transform.position += transform.velocity;
+    auto &key = player()->get<CInput>();
+    if (key.down)
+    {
+        transform.position.y += transform.velocity.y;
+    }
+    if (key.up)
+    {
+        transform.position.y -= transform.velocity.y;
+    }
+    if (key.right)
+    {
+        transform.position.x += transform.velocity.x;
+    }
+    if (key.left)
+    {
+        transform.position.x -= transform.velocity.x;
+    }
 
     // enemy movement
 
@@ -214,7 +230,6 @@ void Game::sCollision()
     //         }
     //     }
     //
-
 
     // todo : implement all proper collision between entities
     //  be suer to use the collision radius, Not the shape radius
@@ -301,6 +316,59 @@ void Game::sUserInput()
         if (event->is<sf::Event::Closed>())
         {
             m_window.close();
+        }
+        if (const auto *keyPressed = event->getIf<sf::Event::KeyPressed>())
+        {
+            switch (keyPressed->scancode)
+            {
+            case sf::Keyboard::Scan::Escape:
+                m_window.close();
+                break;
+
+            case sf::Keyboard::Scan::W:
+                player()->get<CInput>().up = true;
+                break;
+
+            case sf::Keyboard::Scan::S:
+                player()->get<CInput>().down = true;
+                break;
+
+            case sf::Keyboard::Scan::A:
+                player()->get<CInput>().left = true;
+                break;
+
+            case sf::Keyboard::Scan::D:
+                player()->get<CInput>().right = true;
+                break;
+
+            default:
+                break;
+            }
+        }
+
+        if (const auto *KeyReleased = event->getIf<sf::Event::KeyReleased>())
+        {
+            switch (KeyReleased->scancode)
+            {
+            case sf::Keyboard::Scan::W:
+                player()->get<CInput>().up = false;
+                break;
+
+            case sf::Keyboard::Scan::S:
+                player()->get<CInput>().down = false;
+                break;
+
+            case sf::Keyboard::Scan::A:
+                player()->get<CInput>().left = false;
+                break;
+
+            case sf::Keyboard::Scan::D:
+                player()->get<CInput>().right = false;
+                break;
+
+            default:
+                break;
+            }
         }
     }
 }
